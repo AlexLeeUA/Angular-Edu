@@ -1,4 +1,10 @@
-<div>Kobe Bryant forever</div>
+<div class="container">
+  <h1>Angular Pipes</h1>
 
-<input type="text" [(ngModel)]="title">
-<p>{{title}}</p>
+  <p>Wait for it... {{ p | async }}</p>
+
+  <!-- <p>Date {{ date | async | date: 'HH:mm:ss' }}</p> -->
+
+  <p>{{ date | date: 'HH:mm:ss' }}</p>
+
+</div>
