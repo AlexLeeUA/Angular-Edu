@@ -1,11 +1,24 @@
+<ng-template appRef></ng-template>
+
+<nav class="navbar">
+  <h1>Angular Dynamic components</h1>
+</nav>
+
 <div class="container">
-  <h1>Angular Pipes 0.0.1</h1>
+  <div class="card">
 
-  <p>Wait for it... {{ p | async }}</p>
+    <h1>Some content</h1>
 
-  <!-- <p>Date {{ date | async | date: 'HH:mm:ss' }}</p> -->
+    <button class="btn" (click)="showModal()">Show modal</button>
 
-  <p>{{ date | date: 'HH:mm:ss' }}</p>
-  <p>{{ date | date: 'HH:mm:ss' }}</p>
+    <!-- <app-modal
+      *ngIf="modal"
+      title="Modal window"
+      (close)="modal = false"
+    ></app-modal> -->
 
-</div> 
+  </div>
+</div>
+
+
+

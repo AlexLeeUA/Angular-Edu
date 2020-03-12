@@ -1,25 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Component, ComponentFactoryResolver, ViewChild} from '@angular/core'
+import { ModalComponent } from './modal/modal.component'
+import { RefDirective } from './ref.directive';
+import { Title, Meta } from '@angular/platform-browser';
 
-export interface Post {
-  title: string
-  text: string
-}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  p: Promise<string> = new Promise<string>(resolve => setTimeout(() => resolve('Promise resolved'), 4000));
+  @ViewChild(RefDirective, {static: false}) refDir: RefDirective
 
-  date$: Observable<Date> = new Observable(obs => {setInterval(() => {obs.next(new Date())}, 1000)})
-
-  date: Date
-
-  ngOnInit(): void {
-    this.date$.subscribe(date => this.date = date)
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private title: Title,
+    private meta: Meta
+    ) {
+      title.setTitle('App Component Page');
+      meta.addTags([
+        {
+          name: 'keywords',
+          content: 'angular, google'
+        },
+        {
+          name: 'description',
+          content: 'this is app component'
+        }
+      ])
   }
 
+  showModal() {
+    const modalFactory = this.resolver.resolveComponentFactory(ModalComponent);
+    this.refDir.containerRef.clear();
+
+    const component = this.refDir.containerRef.createComponent(modalFactory);
+    component.instance.title = 'Dynamic title'
+    component.instance.close.subscribe(() => {
+      this.refDir.containerRef.clear();
+    })
+  }
 }
+
